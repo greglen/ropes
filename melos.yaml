@@ -1,0 +1,28 @@
+name: engine2d
+packages:
+  - packages/**
+
+scripts:
+  analyze: melos exec --fail-fast -- flutter analyze --fatal-infos
+
+  format: melos exec -- flutter format .
+  get: melos exec -- flutter pub get
+
+  test:select:
+    run: melos exec --fail-fast -- flutter test
+    select-package:
+      dir-exists:
+        - test
+    description: Run `flutter test` for selected packages.
+
+  test:
+    run: melos run test:select --no-select
+    description: Run all Flutter tests in this project.
+
+  update-goldens:
+    description: "Update the golden files"
+    run: melos exec --fail-fast -- flutter test --update-goldens
+
+  coverage:
+    run: |
+      melos exec --fail-fast -- flutter test --coverage
