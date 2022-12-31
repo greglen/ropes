@@ -52,10 +52,9 @@ class Rope {
       n.previousPosition = n.position;
       n.position = newPos;
     }
-    for (int i = 0; i < 1000; i++) {
+    for (int i = 0; i < 10; i++) {
       _solveConstraints();
     }
-    if (nodes.length == 1001) print(length - 200);
     _lastUpdate = now;
   }
 

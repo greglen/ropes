@@ -33,7 +33,7 @@ class __HomeState extends State<_Home> {
       Rope.from(
         const Vector2D(200, 100),
         const Vector2D(200, 0),
-        50,
+        200,
       ),
     );
     world.addRope(

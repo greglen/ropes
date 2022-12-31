@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:demo_ropes/game/src/world.dart';
 import 'package:flutter/material.dart';
 import 'package:ropes/ropes.dart';
@@ -54,15 +56,35 @@ class _Painter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     canvas.drawRect(Offset.zero & size, Paint()..color = Colors.white);
 
-    final paint = Paint();
     for (Rope r in world.ropes) {
       Path path = Path();
       path.moveTo(r.fixedPoint.x, r.fixedPoint.y);
-      for (final n in r.nodes) {
+
+      Vector2D pre = r.nodes.first.position;
+      for (final n in r.nodes.sublist(1)) {
         final p = n.position;
-        path.lineTo(p.x, p.y);
+
+        /// we map +-10% of stretch to +-255 to change the color of the segment
+        final double stretch = ((((pre - p).length - r.segmentLength)) /
+                r.segmentLength *
+                10 *
+                255)
+            .clamp(
+          -255.0,
+          255.0,
+        );
+
+        final Paint paint = Paint()
+          ..strokeWidth = 3
+          ..color = Color.fromRGBO(
+            max(0, stretch.round()), // me map positive stretch to reds
+            max(0, -stretch.round()), // me map negative stretch to greens
+            0,
+            1,
+          );
+        canvas.drawLine(Offset(pre.x, pre.y), Offset(p.x, p.y), paint);
+        pre = p;
       }
-      canvas.drawPath(path, paint..style = PaintingStyle.stroke);
 
       canvas.drawCircle(
         Offset(r.fixedPoint.x, r.fixedPoint.y),
