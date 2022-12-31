@@ -1,6 +1,7 @@
 import 'package:demo_ropes/game/src/world.dart';
 import 'package:flutter/material.dart';
 import 'package:ropes/ropes.dart';
+import 'package:clock/clock.dart';
 
 class Game extends StatefulWidget {
   final World world;
@@ -21,9 +22,11 @@ class _GameState extends State<Game> with TickerProviderStateMixin {
     super.initState();
   }
 
+  DateTime? _lastUpdate;
   void _update() {
-    final now = DateTime.now();
-    widget.world.update(now);
+    _lastUpdate ??= clock.now();
+    _lastUpdate = _lastUpdate!.add(const Duration(milliseconds: 160));
+    widget.world.update(_lastUpdate ?? clock.now());
   }
 
   @override
@@ -35,7 +38,10 @@ class _GameState extends State<Game> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return CustomPaint(
-      painter: _Painter(widget.world, repaint: _controller),
+      painter: _Painter(
+        widget.world,
+        repaint: _controller,
+      ),
     );
   }
 }
@@ -52,7 +58,8 @@ class _Painter extends CustomPainter {
     for (Rope r in world.ropes) {
       Path path = Path();
       path.moveTo(r.fixedPoint.x, r.fixedPoint.y);
-      for (final p in r.points) {
+      for (final n in r.nodes) {
+        final p = n.position;
         path.lineTo(p.x, p.y);
       }
       canvas.drawPath(path, paint..style = PaintingStyle.stroke);
@@ -64,24 +71,24 @@ class _Painter extends CustomPainter {
       );
     }
 
-    TextSpan span = TextSpan(
-      style: const TextStyle(
-        color: Colors.black,
-        fontSize: 22,
-      ),
-      text: world.lastDelta.inMilliseconds.toString(),
-    );
-    TextPainter tp = TextPainter(
-      text: span,
-      textAlign: TextAlign.left,
-      textDirection: TextDirection.ltr,
-    );
-    tp.layout();
+    // TextSpan span = TextSpan(
+    //   style: const TextStyle(
+    //     color: Colors.black,
+    //     fontSize: 22,
+    //   ),
+    //   text: world.lastDelta.inMilliseconds.toString(),
+    // );
+    // TextPainter tp = TextPainter(
+    //   text: span,
+    //   textAlign: TextAlign.left,
+    //   textDirection: TextDirection.ltr,
+    // );
+    // tp.layout();
 
-    tp.paint(
-      canvas,
-      Offset(size.width - tp.width - 2, 0),
-    );
+    // tp.paint(
+    //   canvas,
+    //   Offset(size.width - tp.width - 2, 0),
+    // );
   }
 
   @override

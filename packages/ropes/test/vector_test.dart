@@ -14,4 +14,8 @@ void main() {
   test('Vector Divide', () {
     expect(const Vector2D(1, 1) / 2, const Vector2D(.5, .5));
   });
+  test('Vector Length', () {
+    expect(Vector2D.zero.length, 0);
+    expect(const Vector2D(3, 4).length, 5);
+  });
 }

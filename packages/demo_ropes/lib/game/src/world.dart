@@ -6,14 +6,9 @@ class World {
   void addRope(Rope r) => _ropes.add(r);
   void removeRope(Rope r) => _ropes.remove(r);
 
-  Duration lastDelta = Duration.zero;
-  DateTime? _lastUpdate;
   void update(DateTime now) {
-    lastDelta =
-        _lastUpdate != null ? now.difference(_lastUpdate!) : Duration.zero;
     for (final r in _ropes) {
-      r.update(now: now);
+      r.update(now);
     }
-    _lastUpdate = now;
   }
 }
