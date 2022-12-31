@@ -29,11 +29,13 @@ class __HomeState extends State<_Home> {
 
   @override
   void initState() {
-    world.addRope(Rope.from(
-      const Vector2D(200, 100),
-      const Vector2D(200, 0),
-      50,
-    ));
+    world.addRope(
+      Rope.from(
+        const Vector2D(200, 100),
+        const Vector2D(200, 0),
+        50,
+      ),
+    );
     world.addRope(
       Rope.from(
         const Vector2D(400, 100),

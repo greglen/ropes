@@ -1,5 +1,4 @@
 import 'package:ropes/ropes.dart';
-import 'package:ropes/src/vector.dart';
 import 'package:test/test.dart';
 
 void main() {
