@@ -1,0 +1,25 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "demo_ropes",
+            "cwd": "packages/demo_ropes",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "demo_ropes (profile mode)",
+            "cwd": "packages/demo_ropes",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "demo_ropes (release mode)",
+            "cwd": "packages/demo_ropes",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release"
+        }
+    ]
+}
