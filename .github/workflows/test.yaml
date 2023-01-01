@@ -42,4 +42,4 @@ jobs:
           melos bootstrap
           melos get
           melos analyze
-          melos coverage
+          melos test
