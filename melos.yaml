@@ -23,6 +23,13 @@ scripts:
     description: "Update the golden files"
     run: melos exec --fail-fast -- flutter test --update-goldens
 
-  coverage:
+  coverage:select:
     run: |
       melos exec --fail-fast -- flutter test --coverage
+    select-package:
+      dir-exists:
+        - test
+
+  coverage:
+    run: melos run coverage:select --no-select
+    description: Run all Flutter tests in this project with coverage
