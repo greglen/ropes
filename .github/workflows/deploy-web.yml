@@ -31,7 +31,7 @@ jobs:
           flutter-version: "3.3.10"
           cache-key: flutter
           cache-path: ${{ runner.tool_cache }}/flutter
-      - name: run tests
+      - name: Build Web
         run: |
           flutter --version
           cd packages/demo_ropes

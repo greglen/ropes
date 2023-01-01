@@ -29,6 +29,42 @@ class __HomeState extends State<_Home> {
 
   @override
   void initState() {
+    _reload();
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Ropes Demo',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Material(
+            color: Colors.white,
+            child: Row(
+              children: [
+                IconButton(
+                  icon: const Icon(Icons.restart_alt),
+                  onPressed: _reload,
+                )
+              ],
+            ),
+          ),
+          Expanded(child: Game(world)),
+        ],
+      ),
+      debugShowCheckedModeBanner: false,
+    );
+  }
+
+  void _reload() {
+    for (final r in world.ropes.toList()) {
+      world.removeRope(r);
+    }
     world.addRope(
       Rope.from(
         const Vector2D(200, 100),
@@ -42,19 +78,6 @@ class __HomeState extends State<_Home> {
         const Vector2D(200, 0),
         10,
       ),
-    );
-    super.initState();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Ropes Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: Game(world),
-      debugShowCheckedModeBanner: false,
     );
   }
 }
