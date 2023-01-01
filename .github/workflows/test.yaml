@@ -36,7 +36,6 @@ jobs:
           cache-key: flutter
           cache-path: ${{ runner.tool_cache }}/flutter
       - name: run tests
-        if: ${{ github.ref != 'refs/heads/test_android_build' }}
         run: |
           flutter --version
           dart pub global activate melos
