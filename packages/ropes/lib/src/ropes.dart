@@ -4,8 +4,12 @@ class Rope {
   final List<RopeNode> nodes;
   final Vector2D fixedPoint;
   final double segmentLength;
-  Rope(this.fixedPoint, this.nodes)
-      : segmentLength = (nodes.last.position - nodes.first.position).length /
+  final double stiffness;
+  Rope(
+    this.fixedPoint,
+    this.nodes, {
+    this.stiffness = 1,
+  }) : segmentLength = (nodes.last.position - nodes.first.position).length /
             (nodes.length - 1);
 
   /// Creates a new [Rope] which starts from [fixedPoint] and is straight until
@@ -13,8 +17,9 @@ class Rope {
   factory Rope.from(
     Vector2D fixedPoint,
     Vector2D length,
-    int segments,
-  ) {
+    int segments, {
+    double stiffness = 1,
+  }) {
     return Rope(
       fixedPoint,
       List<RopeNode>.generate(
@@ -24,6 +29,7 @@ class Rope {
           isFixed: i == 0,
         ),
       ),
+      stiffness: stiffness,
     );
   }
 
@@ -65,7 +71,7 @@ class Rope {
       final Vector2D delta = n.position - previousNode.position;
       final double l = delta.length;
       if (l != segmentLength) {
-        final correction = delta.normalize * (l - segmentLength);
+        final correction = delta.normalize * (l - segmentLength) * stiffness;
         if (previousNode.isFixed && n.isFixed) {
         } else if (!previousNode.isFixed && !n.isFixed) {
           previousNode.position += correction / 2;

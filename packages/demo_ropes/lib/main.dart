@@ -65,14 +65,16 @@ class __HomeState extends State<_Home> {
       Rope.from(
         const Vector2D(200, 100),
         const Vector2D(200, 0),
-        200,
+        20,
+        stiffness: .1,
       ),
     );
     world.addRope(
       Rope.from(
         const Vector2D(400, 100),
         const Vector2D(200, 0),
-        10,
+        20,
+        stiffness: 1.8,
       ),
     );
   }
