@@ -1,4 +1,4 @@
-name: engine_2d_lint
+name: linter
 description: A library containing linter rules for all packages
 version: 1.0.0
 publish_to: none

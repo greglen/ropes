@@ -1,9 +1,9 @@
 import 'dart:math';
 
+import 'package:clock/clock.dart';
 import 'package:demo_ropes/game/src/world.dart';
 import 'package:flutter/material.dart';
 import 'package:ropes/ropes.dart';
-import 'package:clock/clock.dart';
 
 class Game extends StatefulWidget {
   final World world;
@@ -56,8 +56,8 @@ class _Painter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     canvas.drawRect(Offset.zero & size, Paint()..color = Colors.white);
 
-    for (Rope r in world.ropes) {
-      Path path = Path();
+    for (final r in world.ropes) {
+      final path = Path();
       path.moveTo(r.fixedPoint.x, r.fixedPoint.y);
 
       Vector2D pre = r.nodes.first.position;
@@ -65,11 +65,9 @@ class _Painter extends CustomPainter {
         final p = n.position;
 
         /// we map +-10% of stretch to +-255 to change the color of the segment
-        final double stretch = ((((pre - p).length - r.segmentLength)) /
-                r.segmentLength *
-                10 *
-                255)
-            .clamp(
+        final double stretch =
+            (((pre - p).length - r.segmentLength) / r.segmentLength * 10 * 255)
+                .clamp(
           -255.0,
           255.0,
         );

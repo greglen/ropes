@@ -1,4 +1,4 @@
-import 'vector.dart';
+import 'package:ropes/src/vector.dart';
 
 class Rope {
   final List<RopeNode> nodes;
@@ -8,7 +8,8 @@ class Rope {
       : segmentLength = (nodes.last.position - nodes.first.position).length /
             (nodes.length - 1);
 
-  /// Creates a new [Rope] which starts from [fixedPoint] and is straight until [length] with [segments]
+  /// Creates a new [Rope] which starts from [fixedPoint] and is straight until
+  /// [length] with [segments]
   factory Rope.from(
     Vector2D fixedPoint,
     Vector2D length,
@@ -43,7 +44,7 @@ class Rope {
     for (final n in nodes.sublist(1)) {
       /// We do a Verlet integration where we add the average displacement to the
       ///  forces multiplied by the square of time delta
-      Vector2D newPos = n.position * 2 +
+      final newPos = n.position * 2 +
           const Vector2D(0, 9.8) *
               ((delta.inMicroseconds / 1000000) *
                   (delta.inMicroseconds / 1000000)) -

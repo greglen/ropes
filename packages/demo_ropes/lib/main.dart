@@ -1,8 +1,6 @@
-import 'package:demo_ropes/game/src/world.dart';
+import 'package:demo_ropes/game/game.dart';
 import 'package:flutter/material.dart';
 import 'package:ropes/ropes.dart';
-
-import 'game/game.dart';
 
 void main() {
   runApp(const MyApp());
@@ -62,9 +60,7 @@ class __HomeState extends State<_Home> {
   }
 
   void _reload() {
-    for (final r in world.ropes.toList()) {
-      world.removeRope(r);
-    }
+    world.ropes.toList().forEach(world.removeRope);
     world.addRope(
       Rope.from(
         const Vector2D(200, 100),

@@ -17,11 +17,11 @@ dependencies:
     path: ../ropes
 
 dev_dependencies:
-  engine_2d_lint:
-    path: ../engine_2d_lint
   flutter_lints: ^2.0.0
   flutter_test:
     sdk: flutter
+  linter:
+    path: ../linter
 
 flutter:
   uses-material-design: true

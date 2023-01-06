@@ -7,6 +7,6 @@ environment:
   sdk: ">=2.18.6 <3.0.0"
 
 dev_dependencies:
-  engine_2d_lint:
-    path: ../engine_2d_lint
+  linter:
+    path: ../linter
   test: ^1.16.0
