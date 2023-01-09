@@ -74,10 +74,11 @@ class _Painter extends CustomPainter {
 
         final Paint paint = Paint()
           ..strokeWidth = 3
+          ..style = PaintingStyle.stroke
           ..color = Color.fromRGBO(
             max(0, stretch.round()), // me map positive stretch to reds
             max(0, -stretch.round()), // me map negative stretch to greens
-            0,
+            1,
             1,
           );
         canvas.drawLine(Offset(pre.x, pre.y), Offset(p.x, p.y), paint);

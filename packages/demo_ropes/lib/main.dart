@@ -65,7 +65,7 @@ class __HomeState extends State<_Home> {
       Rope.from(
         const Vector2D(200, 100),
         const Vector2D(200, 0),
-        20,
+        10,
         stiffness: .1,
       ),
     );
