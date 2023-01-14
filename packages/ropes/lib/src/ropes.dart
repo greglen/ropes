@@ -2,11 +2,9 @@ import 'package:ropes/src/vector.dart';
 
 class Rope {
   final List<RopeNode> nodes;
-  final Vector2D fixedPoint;
   final double segmentLength;
   final double stiffness;
   Rope(
-    this.fixedPoint,
     this.nodes, {
     this.stiffness = 1,
   }) : segmentLength = (nodes.last.position - nodes.first.position).length /
@@ -15,23 +13,28 @@ class Rope {
   /// Creates a new [Rope] which starts from [fixedPoint] and is straight until
   /// [length] with [segments]
   factory Rope.from(
-    Vector2D fixedPoint,
+    Vector2D start,
     Vector2D length,
     int segments, {
     double stiffness = 1,
   }) {
     return Rope(
-      fixedPoint,
       List<RopeNode>.generate(
         segments + 1,
         (i) => RopeNode(
-          fixedPoint + (length / segments.toDouble()) * i.toDouble(),
+          start + (length / segments.toDouble()) * i.toDouble(),
           isFixed: i == 0,
         ),
       ),
       stiffness: stiffness,
     );
   }
+
+  set start(Vector2D s) {
+    nodes.first = RopeNode(s, isFixed: true);
+  }
+
+  Vector2D get start => nodes.first.position;
 
   double get length {
     RopeNode previousNode = nodes.first;

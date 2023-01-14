@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:clock/clock.dart';
+import 'package:collection/collection.dart';
 import 'package:demo_ropes/game/src/world.dart';
 import 'package:flutter/material.dart';
 import 'package:ropes/ropes.dart';
@@ -39,10 +40,20 @@ class _GameState extends State<Game> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    return CustomPaint(
-      painter: _Painter(
-        widget.world,
-        repaint: _controller,
+    return GestureDetector(
+      onTapDown: (d) {
+        widget.world.ropes.first.start =
+            Vector2D(d.localPosition.dx, d.localPosition.dy);
+      },
+      onPanUpdate: (d) {
+        widget.world.ropes.first.start =
+            Vector2D(d.localPosition.dx, d.localPosition.dy);
+      },
+      child: CustomPaint(
+        painter: _Painter(
+          widget.world,
+          repaint: _controller,
+        ),
       ),
     );
   }
@@ -58,7 +69,7 @@ class _Painter extends CustomPainter {
 
     for (final r in world.ropes) {
       final path = Path();
-      path.moveTo(r.fixedPoint.x, r.fixedPoint.y);
+      path.moveTo(r.start.x, r.start.y);
 
       Vector2D pre = r.nodes.first.position;
       for (final n in r.nodes.sublist(1)) {
@@ -86,7 +97,7 @@ class _Painter extends CustomPainter {
       }
 
       canvas.drawCircle(
-        Offset(r.fixedPoint.x, r.fixedPoint.y),
+        Offset(r.start.x, r.start.y),
         5,
         Paint(),
       );
