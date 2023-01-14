@@ -1,7 +1,6 @@
 import 'dart:math';
 
 import 'package:clock/clock.dart';
-import 'package:collection/collection.dart';
 import 'package:demo_ropes/game/src/world.dart';
 import 'package:flutter/material.dart';
 import 'package:ropes/ropes.dart';
@@ -16,6 +15,7 @@ class Game extends StatefulWidget {
 
 class _GameState extends State<Game> with TickerProviderStateMixin {
   late final AnimationController _controller;
+  RopeObject? _selected;
   @override
   void initState() {
     _controller =
@@ -42,12 +42,24 @@ class _GameState extends State<Game> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTapDown: (d) {
-        widget.world.ropes.first.start =
-            Vector2D(d.localPosition.dx, d.localPosition.dy);
+        _selected = widget.world.ropeHeadAt(d.localPosition);
+        _selected?.selected = true;
+      },
+      onTapUp: (d) {
+        _selected?.selected = false;
+        _selected = null;
       },
       onPanUpdate: (d) {
-        widget.world.ropes.first.start =
+        _selected?.rope.start =
             Vector2D(d.localPosition.dx, d.localPosition.dy);
+      },
+      onPanCancel: () {
+        _selected?.selected = false;
+        _selected = null;
+      },
+      onPanEnd: (d) {
+        _selected?.selected = false;
+        _selected = null;
       },
       child: CustomPaint(
         painter: _Painter(
@@ -67,7 +79,8 @@ class _Painter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     canvas.drawRect(Offset.zero & size, Paint()..color = Colors.white);
 
-    for (final r in world.ropes) {
+    for (final ropeObject in world.ropes) {
+      final r = ropeObject.rope;
       final path = Path();
       path.moveTo(r.start.x, r.start.y);
 
@@ -99,7 +112,7 @@ class _Painter extends CustomPainter {
       canvas.drawCircle(
         Offset(r.start.x, r.start.y),
         5,
-        Paint(),
+        Paint()..color = ropeObject.selected ? Colors.yellow : Colors.black,
       );
     }
 

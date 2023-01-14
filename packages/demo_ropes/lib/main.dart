@@ -62,19 +62,23 @@ class __HomeState extends State<_Home> {
   void _reload() {
     world.ropes.toList().forEach(world.removeRope);
     world.addRope(
-      Rope.from(
-        const Vector2D(200, 100),
-        const Vector2D(200, 0),
-        10,
-        stiffness: .1,
+      RopeObject(
+        Rope.from(
+          const Vector2D(200, 100),
+          const Vector2D(200, 0),
+          100,
+          stiffness: 1.8,
+        ),
       ),
     );
     world.addRope(
-      Rope.from(
-        const Vector2D(400, 100),
-        const Vector2D(200, 0),
-        20,
-        stiffness: 1.8,
+      RopeObject(
+        Rope.from(
+          const Vector2D(400, 100),
+          const Vector2D(200, 0),
+          50,
+          stiffness: 1.8,
+        ),
       ),
     );
   }

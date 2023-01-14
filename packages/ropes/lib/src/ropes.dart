@@ -4,13 +4,14 @@ class Rope {
   final List<RopeNode> nodes;
   final double segmentLength;
   final double stiffness;
+
   Rope(
     this.nodes, {
     this.stiffness = 1,
   }) : segmentLength = (nodes.last.position - nodes.first.position).length /
             (nodes.length - 1);
 
-  /// Creates a new [Rope] which starts from [fixedPoint] and is straight until
+  /// Creates a new [Rope] which starts from [start] and is straight until
   /// [length] with [segments]
   factory Rope.from(
     Vector2D start,
@@ -30,9 +31,7 @@ class Rope {
     );
   }
 
-  set start(Vector2D s) {
-    nodes.first = RopeNode(s, isFixed: true);
-  }
+  set start(Vector2D s) => nodes.first.position = s;
 
   Vector2D get start => nodes.first.position;
 
@@ -62,7 +61,7 @@ class Rope {
       n.previousPosition = n.position;
       n.position = newPos;
     }
-    for (int i = 0; i < 10; i++) {
+    for (int i = 0; i < 20; i++) {
       _solveConstraints();
     }
     _lastUpdate = now;
