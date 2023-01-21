@@ -24,6 +24,7 @@ class _Home extends StatefulWidget {
 
 class __HomeState extends State<_Home> {
   World world = World();
+  double _stiffness = 1.8;
 
   @override
   void initState() {
@@ -48,6 +49,18 @@ class __HomeState extends State<_Home> {
                 IconButton(
                   icon: const Icon(Icons.restart_alt),
                   onPressed: _reload,
+                ),
+                Slider(
+                  min: .01,
+                  max: 1.93,
+                  value: _stiffness,
+                  onChanged: (value) {
+                    _stiffness = value;
+                    setState(() {});
+                    world.ropes.forEach(
+                      (r) => r.rope.stiffness = _stiffness,
+                    );
+                  },
                 )
               ],
             ),
@@ -67,7 +80,7 @@ class __HomeState extends State<_Home> {
           const Vector2D(200, 100),
           const Vector2D(200, 0),
           100,
-          stiffness: 1.8,
+          stiffness: _stiffness,
         ),
       ),
     );

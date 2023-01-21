@@ -3,7 +3,7 @@ import 'package:ropes/src/vector.dart';
 class Rope {
   final List<RopeNode> nodes;
   final double segmentLength;
-  final double stiffness;
+  double stiffness;
 
   Rope(
     this.nodes, {
@@ -61,7 +61,7 @@ class Rope {
       n.previousPosition = n.position;
       n.position = newPos;
     }
-    for (int i = 0; i < 20; i++) {
+    for (int i = 0; i < 200; i++) {
       _solveConstraints();
     }
     _lastUpdate = now;
