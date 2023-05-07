@@ -52,7 +52,7 @@ class __HomeState extends State<_Home> {
                 ),
                 Slider(
                   min: .01,
-                  max: 1.93,
+                  max: 5,
                   value: _stiffness,
                   onChanged: (value) {
                     _stiffness = value;

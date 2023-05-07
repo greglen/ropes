@@ -9,9 +9,9 @@ scripts:
   get: melos exec -- flutter pub get
 
   test:select:
-    run: melos exec --fail-fast -- flutter test
-    select-package:
-      dir-exists:
+    run: melos exec -c 1 --fail-fast -- flutter test
+    packageFilters:
+      dirExists:
         - test
     description: Run `flutter test` for selected packages.
 
@@ -26,8 +26,8 @@ scripts:
   coverage:select:
     run: |
       melos exec --fail-fast -- flutter test --coverage
-    select-package:
-      dir-exists:
+    packageFilters:
+      dirExists:
         - test
 
   coverage:

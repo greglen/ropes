@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:ropes/src/vector.dart';
 
 class Rope {
@@ -73,14 +75,26 @@ class Rope {
       final Vector2D delta = n.position - previousNode.position;
       final double l = delta.length;
       if (l != segmentLength) {
-        final correction = delta.normalize * (l - segmentLength) * stiffness;
         if (previousNode.isFixed && n.isFixed) {
         } else if (!previousNode.isFixed && !n.isFixed) {
+          /// We do not correct by more than .5 otherwise the points may swap
+          /// their side of the segment
+          final correctionFactor = min((l - segmentLength) * stiffness, .5);
+
+          final correction = delta.normalize * correctionFactor;
           previousNode.position += correction / 2;
           n.position -= correction / 2;
         } else if (previousNode.isFixed && !n.isFixed) {
+          /// We do not correct by more than 1 otherwise the points may swap
+          /// their side of the segment
+          final correctionFactor = min((l - segmentLength) * stiffness, 1.0);
+          final correction = delta.normalize * correctionFactor;
           n.position -= correction;
         } else if (!previousNode.isFixed && n.isFixed) {
+          /// We do not correct by more than 1 otherwise the points may swap
+          /// their side of the segment
+          final correctionFactor = max((l - segmentLength) * stiffness, 1.0);
+          final correction = delta.normalize * correctionFactor;
           previousNode.position += correction;
         } else {
           assert(false);
